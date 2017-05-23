@@ -251,11 +251,8 @@ public class GameManager : MonoBehaviour {
 
 		string[] lines = new string[clicksList.Count];
 		int i = 0;
-		Debug.Log ("Entro a savClicks");
-		Debug.Log (clicksList.Count);
 		foreach (Vector3 clickito in clicksList) {
 			lines[i]= block + ";" + trial + ";" + clickito.x + ";" + clickito.y + ";" + clickito.z ; 
-			Debug.Log (lines [i]);
 			i++;
 		}
 		//This location can be used by unity to save a file if u open the game in any platform/computer:      Application.persistentDataPath;
