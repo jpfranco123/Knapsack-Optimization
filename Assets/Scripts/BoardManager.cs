@@ -61,8 +61,10 @@ public class BoardManager : MonoBehaviour {
 	public static int totalAreaBill = 8;
 	public static int totalAreaWeight = 8;
 
-
-	//Item - In/Out / Time
+	// The list of all the button clicks on items. Each event contains the following information:
+	// ItemNumber (a number between 1 and the number of items. It corresponds to the index in the weight's (and value's) vector.)
+	// Item is being selected In/Out (1/0) 
+	// Time of the click with respect to the beginning of the trial 
 	public List <Vector3> itemClicks =  new List<Vector3> ();
 
 
@@ -71,7 +73,9 @@ public class BoardManager : MonoBehaviour {
 	//coorValue1: The coordinates of one of the corners of the encompassing rectangle of the Value Part of the Item. The coordinates are taken relative to the center of the item.
 	//coorValue2: The coordinates of the diagonally opposite corner of the Value Part of the Item.
 	//coordWeight1 and coordWeight2: Same as before but for the weight part of the item.
-	//66
+	//botncitoW: button attached to the weight
+	//botncitoV: button attached to the Value (Bill)
+	//itemNumber: a number between 1 and the number of items. It corresponds to the index in the weight's (and value's) vector.
 	private struct Item
 	{
 		public GameObject gameItem;
@@ -270,9 +274,8 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Places the item on the input position
+	/// Places the item on the input position and assigns the button press listener to the item.
 	/// </summary>
-	/// 66
 	void placeItem(Item itemToLocate, Vector3 position){
 		//Setting the position in a separate line is importatant in order to set it according to global coordinates.
 		itemToLocate.gameItem.transform.position = position;
@@ -359,6 +362,7 @@ public class BoardManager : MonoBehaviour {
 			if (itemsPlaced == false) {
 				GameManager.errorInScene ("Not enough space to place all items");
 			}
+			keysON = true;
 
 		} else if(sceneToSetup ==2){
 			setKSInstance ();
@@ -366,7 +370,6 @@ public class BoardManager : MonoBehaviour {
 			RandomizeButtons ();
 			keysON = true;
 
-			//1234
 //			InitialiseList ();
 //			seeGrid();
 		}
@@ -396,7 +399,6 @@ public class BoardManager : MonoBehaviour {
 		//Debug.Log ("Item");
 		//Debug.Log(item.coordValue1 + posxy);
 		//Debug.Log(item.coordValue2+posxy);
-		//1234
 		return overlapValue || overlapWeight;
         //return false;
 	}
@@ -413,47 +415,26 @@ public class BoardManager : MonoBehaviour {
 	//123: Perhaps a good practice thing to do would be to create a "close scene" function that takes as parameter the answer and closes everything (including keysON=false) and then forwards to 
 	//changeToNextScene(answer) on game manager
 	private void setKeyInput(){
-		//66
-//		if (GameManager.escena == 2) {
-//			//1: No/Yes 0: Yes/No
-//			if (randomYes == 1) {
-//				if (Input.GetKeyDown (KeyCode.A)) {
-//					//Left
-//					GameManager.changeToNextScene (0, randomYes);
-//				} else if (Input.GetKeyDown (KeyCode.G)) {
-//					//Right
-//					GameManager.changeToNextScene (1, randomYes);
-//				}
-//			} else if (randomYes == 0) {
-//				if (Input.GetKeyDown (KeyCode.A)) {
-//					//Left
-//					GameManager.changeToNextScene (1, randomYes);
-//				} else if (Input.GetKeyDown (KeyCode.G)) {
-//					//Right
-//					GameManager.changeToNextScene (0, randomYes);
-//				}
-//			}
-//		} else
-		if (GameManager.escena == 0) {
+		if (GameManager.escena == 1) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				GameManager.changeToNextScene (itemClicks, 1);
+			} 
+		} else if (GameManager.escena == 0) {
 			if (Input.GetKeyDown (KeyCode.D)) {
 				GameManager.setTimeStamp ();
 
-				GameManager.changeToNextScene (new List<Vector3> ());
+				GameManager.changeToNextScene (new List<Vector3> (),0);
 			}
 		}
 	}
 
-	//66
+	/// <summary>
+	/// The action to be taken when a button is pressed: Toggles the light and adds the click to itemClicks
+	/// </summary>
+	/// <param name="itemToLocate"> item clicked </param>
 	private void setElementSelectionButtons(Item itemToLocate){
 
 		int itemN = itemToLocate.itemNumber;
-		//Component halo = itemToLocate.gameItem.GetComponent ("Halo");
-		//halo.enabled = true;
-		//halo.GetType().GetProperty("enabled").SetValue(halo, true, null);
-		//halo.GetType().GetProperty("enabled").SetValue(halo, !halo.enabled, null);
-		//!myLight.enabled
-		Debug.Log ("You clicked a button BITCH! :P");
-		Debug.Log (itemN);
 
 		Light myLight = itemToLocate.gameItem.GetComponent<Light> ();
 		myLight.enabled = !myLight.enabled;
@@ -461,17 +442,6 @@ public class BoardManager : MonoBehaviour {
 		int itemIn=(myLight.enabled)? 1 : 0 ;
 
 		itemClicks.Add (new Vector3 (itemN, itemIn , GameManager.timeTrial - GameManager.tiempo));
-
-		Debug.Log (new Vector3 (itemN, itemIn , GameManager.tiempo));
-		Debug.Log (itemClicks.Count);
-
-
-		//Debug.Log (!halo.GetType ().GetProperty("enabled"));
-		//Debug.Log (halo.GetType ().GetProperty("enabled")==enabled);
-		//System.Boolean aa = halo.GetType ().GetProperty ("enabled") as bool;;
-		//Debug.Log (halo.GetType ().GetProperty ("enabled"));
-		//Debug.Log (aa);
-		//Debug.Log(aa==halo.GetType().GetProperty("enabled"));
 	}
 
 

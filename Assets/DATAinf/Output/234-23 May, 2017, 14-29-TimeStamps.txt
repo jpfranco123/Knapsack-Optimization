@@ -1,7 +1,0 @@
-PartcipantID:234
-InitialTimeStamp:14-29-42-647
-1:ItemsNoQuestion;11:ItemsWithQuestion;2:AnswerScreen;21:ParticipantsAnswer;3:InterTrialScreen;4:InterBlockScreen;5:EndScreen
-block;trial;eventType;elapsedTime
-1;1;1;41
-1;1;11;82
-1;1;3;50197

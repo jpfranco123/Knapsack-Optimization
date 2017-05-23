@@ -1,6 +1,0 @@
-PartcipantID:33
-InitialTimeStamp:14-33-08-369
-block;trial;item;In(1)/Out(0);time
-PartcipantID:33
-InitialTimeStamp:14-33-49-154
-block;trial;item;In(1)/Out(0);time

@@ -196,8 +196,9 @@ public class GameManager : MonoBehaviour {
 		
 	//Saves the data of a trial to a .txt file with the participants ID as filename using StreamWriter.
 	//If the file doesn't exist it creates it. Otherwise it adds on lines to the existing file.
-	//Each line in the File has the following structure: "trial;answer;timeSpent".
-	public static void save( string itemsSelected ,float timeSpent, string error) {
+	//Each line in the File has the following structure: "Bolck;trial; WasTheAnswer submitted?;timeSpent;instanceNumber;
+	// itemsSelected in the final solutions (irrespective if it was submitted); xycorrdinates; Error message if any.".
+	public static void save( string itemsSelected, int submitted ,float timeSpent, string error) {
 
 		//string xyCoordinates = instance.boardScript.getItemCoordinates ();//BoardManager.getItemCoordinates ();
 		string xyCoordinates = BoardManager.getItemCoordinates ();
@@ -205,7 +206,7 @@ public class GameManager : MonoBehaviour {
 		//Get the instance number for this trial and add 1 because the instanceRandomization is linked to array numbering in C#, which starts at 0;
 		int instanceNum = instanceRandomization [trial + (block - 1) * numberOfTrials - 1] + 1;
 
-		string dataTrialText = block + ";" + trial + ";" + timeSpent +  ";" + instanceNum + ";"+ itemsSelected + ";" + xyCoordinates + ";" + error; 
+		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ itemsSelected + ";" + xyCoordinates + ";" + error; 
 
 		string[] lines = {dataTrialText};
 		string folderPathSave = Application.dataPath + outputFolder;
@@ -239,11 +240,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	//66
+
 	/// <summary>
-	/// Saves the time stamp for a particular event type to the "TimeStamps" File
+	/// Saves the time stamp of every click made on the items 
 	/// </summary>
-	/// Event type: 1=ItemsNoQuestion;11=ItemsWithQuestion;2=AnswerScreen;21=ParticipantsAnswer;3=InterTrialScreen;4=InterBlockScreen;5=EndScreen
+	/// block ; trial ; clicklist (i.e. item number ; itemIn? (1: selcting; 0:deselecting) ; time of the click with respect to the begining of the trial)
 	public static void saveClicks(List<Vector3> clicksList) {
 
 		string folderPathSave = Application.dataPath + outputFolder;
@@ -284,7 +285,7 @@ public class GameManager : MonoBehaviour {
 			l++;
 			ksn++;
 		}
-		lines [l] = "block;trial;solved;timeSpent;instanceNumber;xyCoordinates;error";
+		lines [l] = "block;trial;submitted;timeSpent;instanceNumber;itemsSelected;xyCoordinates;error";
 
 		string folderPathSave = Application.dataPath + outputFolder;
 		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID + ".txt",true)) {
@@ -568,16 +569,19 @@ public class GameManager : MonoBehaviour {
 
 
 	//Takes care of changing the Scene to the next one (Except for when in the setup scene)
-	public static void changeToNextScene(List <Vector3> itemClicks){
+	public static void changeToNextScene(List <Vector3> itemClicks, int submitted){
 		BoardManager.keysON = false;
 		if (escena == 0) {
 			saveHeaders ();
 			SceneManager.LoadScene (1);
 		}
 		else if (escena == 1) {
+			if (submitted == 1) {
+				saveTimeStamp (21);
+			}
 			string itemsSelected= extractItemsSelected (itemClicks);
 			//bool solved = solutionFound (itemClicks);
-			save (itemsSelected ,timeTrial - tiempo, "");
+			save (itemsSelected, submitted ,timeTrial - tiempo, "");
 			saveClicks (itemClicks);
 			SceneManager.LoadScene (3);
 
@@ -618,7 +622,7 @@ public class GameManager : MonoBehaviour {
 		Debug.Log (errorDetails);
 
 		BoardManager.keysON = false;
-		save ("", timeTrial, errorDetails);
+		save ("",2, timeTrial, errorDetails);
 		changeToNextTrial ();
 	}
 
@@ -647,12 +651,12 @@ public class GameManager : MonoBehaviour {
 		return stamp;
 	}
 
-//	//66
-//	private bool solutionFound(List <Vector3> itemClicks){
-//
-//	}
 
-	//66
+	/// <summary>
+	/// Extracts the items that were finally selected based on the sequence of clicks.
+	/// </summary>
+	/// <returns>The items selected.</returns>
+	/// <param name="itemClicks"> Sequence of clicks on the items.</param>
 	private static string extractItemsSelected (List <Vector3> itemClicks){
 		List<int> itemsIn = new List<int>();
 		foreach(Vector3 clickito in itemClicks){
@@ -699,7 +703,7 @@ public class GameManager : MonoBehaviour {
 			} else {
 				//Debug.Log ("COUNT!");
 				//Debug.Log(boardScript.itemClicks.Count);
-				changeToNextScene(boardScript.itemClicks);
+				changeToNextScene(boardScript.itemClicks, 0);
 			}
 
 		}

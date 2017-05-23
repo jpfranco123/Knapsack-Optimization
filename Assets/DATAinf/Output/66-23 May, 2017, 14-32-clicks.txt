@@ -1,3 +1,0 @@
-PartcipantID:66
-InitialTimeStamp:14-32-19-978
-block;trial;item;In(1)/Out(0);time

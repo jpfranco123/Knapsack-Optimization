@@ -1,3 +1,0 @@
-PartcipantID:111
-InitialTimeStamp:13-04-28-218
-block;trial;item;In(1)/Out(0);time
