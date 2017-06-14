@@ -74,6 +74,8 @@ public class GameManager : MonoBehaviour {
 
 	public static string dateID = @System.DateTime.Now.ToString("dd MMMM, yyyy, HH-mm");
 
+	private static string identifierName;
+
 	//Is the question shown on scene scene 1?
 	private static int questionOn;
 
@@ -92,13 +94,17 @@ public class GameManager : MonoBehaviour {
 	public struct KSInstance
 	{
 		public int capacity;
-		public int profit;
+		//public int profit;
 
 		public int[] weights;
 		public int[] values;
 
 		public string id;
 		public string type;
+
+		public int profitOpt;
+		public int capacityOpt;
+		public int[] itemsOpt;
 	}
 
 	//An array of all the instances to be uploaded form .txt files.
@@ -206,14 +212,40 @@ public class GameManager : MonoBehaviour {
 		//Get the instance number for this trial and add 1 because the instanceRandomization is linked to array numbering in C#, which starts at 0;
 		int instanceNum = instanceRandomization [trial + (block - 1) * numberOfTrials - 1] + 1;
 
-		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ itemsSelected + ";" + xyCoordinates + ";" + error; 
+		KSInstance ks = ksinstances [instanceNum - 1];
+
+
+		//Calculates the capacity and profit selected
+		int profitSel = 0;
+		int capacitySel=0;
+		int[] itemSelectedBool= Enumerable.Repeat(0, ks.weights.Length).ToArray();
+		if (itemsSelected != "") {
+			int[] itemSelectedInt = Array.ConvertAll (itemsSelected.Split (','), int.Parse);
+			foreach (int itemS in itemSelectedInt) {
+				profitSel   = profitSel    +   ks.values [itemS - 1];
+				capacitySel = capacitySel  +   ks.weights [itemS - 1];
+				itemSelectedBool [itemS - 1] = 1;
+			}
+		}
+
+		//66 itemsSelectedInt to array of 0s and 1s
+
+			
+		string itemsOptTemp = string.Join (",", ks.itemsOpt.Select (p => p.ToString ()).ToArray ());
+		int cOptTemp = ks.capacityOpt;
+		int pOtptTemp = ks.profitOpt;
+		string itemsSelectedBoolS = string.Join (",", itemSelectedBool.Select (p => p.ToString ()).ToArray ());
+
+		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ itemsSelectedBoolS + ";" + capacitySel + ";" + profitSel
+			+ ";" + itemsOptTemp + ";" + cOptTemp + ";" + pOtptTemp + ";" + xyCoordinates + ";" + error;
 
 		string[] lines = {dataTrialText};
 		string folderPathSave = Application.dataPath + outputFolder;
 
+
 		//This location can be used by unity to save a file if u open the game in any platform/computer:      Application.persistentDataPath;
 
-		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID +".txt",true)) {
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName +"TrialInfo.txt",true)) {
 			foreach (string line in lines)
 				outputFile.WriteLine(line);
 		} 
@@ -233,7 +265,7 @@ public class GameManager : MonoBehaviour {
 		string folderPathSave = Application.dataPath + outputFolder;
 
 		//This location can be used by unity to save a file if u open the game in any platform/computer:      Application.persistentDataPath;
-		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID + "-TimeStamps.txt",true)) {
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "TimeStamps.txt",true)) {
 			foreach (string line in lines)
 				outputFile.WriteLine(line);
 		} 
@@ -249,6 +281,7 @@ public class GameManager : MonoBehaviour {
 
 		string folderPathSave = Application.dataPath + outputFolder;
 
+
 		string[] lines = new string[clicksList.Count];
 		int i = 0;
 		foreach (Vector3 clickito in clicksList) {
@@ -256,7 +289,7 @@ public class GameManager : MonoBehaviour {
 			i++;
 		}
 		//This location can be used by unity to save a file if u open the game in any platform/computer:      Application.persistentDataPath;
-		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID + "-clicks.txt",true)) {
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "Clicks.txt",true)) {
 			foreach (string line in lines)
 				outputFile.WriteLine(line);
 		} 
@@ -269,6 +302,10 @@ public class GameManager : MonoBehaviour {
 	/// In the TimeStamp file it saves: 1. The participant ID. 2.The time onset of the stopwatch from which the time stamps are measured. 3. the event types description.
 	/// </summary>
 	private static void saveHeaders(){
+
+		identifierName = participantID + "_" + dateID + "_" + "Opt" + "_";
+
+		//Headers for save() file
 		string[] lines = new string[numberOfInstances+2];
 		lines[0]="PartcipantID:" + participantID;
 		int l = 1;
@@ -277,35 +314,42 @@ public class GameManager : MonoBehaviour {
 			//Without instance type and problem ID:
 			//lines [l] = "Instance:" + ksn + ";c=" + ks.capacity + ";p=" + ks.profit + ";w=" + string.Join (",", ks.weights.Select (p => p.ToString ()).ToArray ()) + ";v=" + string.Join (",", ks.values.Select (p => p.ToString ()).ToArray ());
 			//With instance type and problem ID
-			lines [l] = "Instance:" + ksn + ";c=" + ks.capacity + ";p=" + ks.profit + ";w=" + string.Join (",", ks.weights.Select (p => p.ToString ()).ToArray ()) + ";v=" + string.Join (",", ks.values.Select (p => p.ToString ()).ToArray ())
-				+ ";id=" + ks.id + ";type=" + ks.type;
+			string wTemp = string.Join (",", ks.weights.Select (p => p.ToString ()).ToArray ());
+			string vTemp = string.Join (",", ks.values.Select (p => p.ToString ()).ToArray ());
+			string itemsOptTemp = string.Join (",", ks.itemsOpt.Select (p => p.ToString ()).ToArray ());
+
+			lines [l] = "Instance:" + ksn + ";c=" + ks.capacity + ";w=" + wTemp + ";v=" + vTemp + ";id=" + ks.id + ";type=" + ks.type 
+				+ ";pOpt=" + ks.profitOpt + ";cOpt=" + ks.capacityOpt + ";itemsOpt=" + itemsOptTemp ;
+
 			l++;
 			ksn++;
 		}
-		lines [l] = "block;trial;submitted;timeSpent;instanceNumber;itemsSelected;xyCoordinates;error";
+		lines [l] = "block;trial;submitted;timeSpent;instanceNumber;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;xyCoordinates;error";
 
+		//Headerds for timestamps file
 		string folderPathSave = Application.dataPath + outputFolder;
-		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID + ".txt",true)) {
+		//66 Change all save functions
+
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "TrialInfo.txt",true)) {
 			foreach (string line in lines)
 				outputFile.WriteLine(line);
 		}
-
 		string[] lines1 = new string[4];
 		lines1[0]="PartcipantID:" + participantID;
 		lines1[1] = "InitialTimeStamp:" + initialTimeStamp;
 		lines1[2]="1:ItemsNoQuestion;11:ItemsWithQuestion;2:AnswerScreen;21:ParticipantsAnswer;3:InterTrialScreen;4:InterBlockScreen;5:EndScreen";
 		lines1[3]="block;trial;eventType;elapsedTime"; 
-		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID + "-TimeStamps.txt",true)) {
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "TimeStamps.txt",true)) {
 			foreach (string line in lines1)
 				outputFile.WriteLine(line);
 		}
 
-
+		//Headerds for Clicks file
 		string[] lines2 = new string[3];
 		lines2[0]="PartcipantID:" + participantID;
 		lines2[1] = "InitialTimeStamp:" + initialTimeStamp;
 		lines2[2]="block;trial;item;In(1)/Out(0);time"; 
-		using (StreamWriter outputFile = new StreamWriter(folderPathSave + participantID + "-" + dateID + "-clicks.txt",true)) {
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "Clicks.txt",true)) {
 			foreach (string line in lines2)
 				outputFile.WriteLine(line);
 		}
@@ -359,20 +403,26 @@ public class GameManager : MonoBehaviour {
 			string weightsS;
 			string valuesS;
 			string capacityS;
-			string profitS;
+			//string profitS;
+			string capacityOptS;
+			string profitOptS;
+			string itemsOptS;
 
 			dict.TryGetValue ("weights", out weightsS);
 			dict.TryGetValue ("values", out valuesS);
 			dict.TryGetValue ("capacity", out capacityS);
-			dict.TryGetValue ("profit", out profitS);
+			//dict.TryGetValue ("profit", out profitS);
+			dict.TryGetValue ("capacityAtOptimum", out capacityOptS);
+			dict.TryGetValue ("profitAtOptimum", out profitOptS);
+			dict.TryGetValue ("solutionItems", out itemsOptS);
 
 			ksinstances[k-1].weights = Array.ConvertAll (weightsS.Substring (1, weightsS.Length - 2).Split (','), int.Parse);
-
 			ksinstances[k-1].values = Array.ConvertAll (valuesS.Substring (1, valuesS.Length - 2).Split (','), int.Parse);
-
 			ksinstances[k-1].capacity = int.Parse (capacityS);
-
-			ksinstances[k-1].profit = int.Parse (profitS);
+			//ksinstances[k-1].profit = int.Parse (profitS);
+			ksinstances[k-1].capacityOpt = int.Parse (capacityOptS);
+			ksinstances[k-1].profitOpt = int.Parse (profitOptS);
+			ksinstances[k-1].itemsOpt = Array.ConvertAll (itemsOptS.Substring (1, itemsOptS.Length - 2).Split (','), int.Parse);
 
 			dict.TryGetValue ("problemID", out ksinstances[k-1].id);
 			dict.TryGetValue ("instanceType", out ksinstances[k-1].type);

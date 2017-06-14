@@ -1,6 +1,8 @@
-weights:[17,18,9,14,15,15]
-values:[14,11,14,5,14,10]
-capacity:48
-profit:46
-problemID:93-0.44-0.6
-instanceType:1
+weights:[22,29,18,11,27,5,33]
+values:[5,5,9,10,8,46,10]
+capacity:63
+problemID:234-0.44
+instanceType:2
+profitAtOptimum:73
+capacityAtOptimum:61
+solutionItems:[0,0,1,1,1,1,0]

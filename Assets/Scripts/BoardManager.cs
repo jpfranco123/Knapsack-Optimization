@@ -416,7 +416,7 @@ public class BoardManager : MonoBehaviour {
 	//changeToNextScene(answer) on game manager
 	private void setKeyInput(){
 		if (GameManager.escena == 1) {
-			if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.GetKeyDown (KeyCode.D)) {
 				GameManager.changeToNextScene (itemClicks, 1);
 			} 
 		} else if (GameManager.escena == 0) {

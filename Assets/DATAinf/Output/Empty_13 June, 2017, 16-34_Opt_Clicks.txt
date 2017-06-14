@@ -1,0 +1,6 @@
+PartcipantID:hades
+InitialTimeStamp:16-34-42-755
+block;trial;item;In(1)/Out(0);time
+1;1;1;1;0.8714638
+1;1;6;1;1.179707
+1;1;4;1;1.768574
