@@ -197,7 +197,27 @@ public class GameManager : MonoBehaviour {
 
 		if (escena != 0) {
 			startTimer ();
+			pauseManager ();
 		}
+
+
+	}
+
+	//To pause press alt+p
+	//Pauses/Unpauses the game. Unpausing take syou directly to next trial
+	//Warning! When Unpausing the following happens:
+	//If paused/unpaused in scene1 (while items are shown -trial-) then saves the trialInfo with an error: "pause" without information on the items selected.
+	//If paused/unpaused on ITI or IBI then it generates a new row in trial Info with an error ("pause"). i.e. there are now 2 rows for the trial.
+	private void pauseManager(){
+		//if (Input.GetKeyDown (KeyCode.P)) {
+		if (( Input.GetKey (KeyCode.LeftAlt) || Input.GetKey (KeyCode.RightAlt)) && Input.GetKeyDown (KeyCode.P) ){ 
+			Time.timeScale = (Time.timeScale == 1) ? 0 : 1;
+			if(Time.timeScale==1){
+				errorInScene("Pause");
+			}
+		} 
+
+
 	}
 		
 	//Saves the data of a trial to a .txt file with the participants ID as filename using StreamWriter.
@@ -228,15 +248,15 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 			
-
-			
 		string itemsOptTemp = string.Join (",", ks.itemsOpt.Select (p => p.ToString ()).ToArray ());
 		int cOptTemp = ks.capacityOpt;
 		int pOtptTemp = ks.profitOpt;
 		string itemsSelectedBoolS = string.Join (",", itemSelectedBool.Select (p => p.ToString ()).ToArray ());
 
+		bool correct = (capacitySel <= ks.capacity) && (profitSel == pOtptTemp);
+
 		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ ks.capacity +";"+ itemsSelectedBoolS + ";" + capacitySel + ";" + profitSel
-			+ ";" + itemsOptTemp + ";" + cOptTemp + ";" + pOtptTemp + ";" + xyCoordinates + ";" + error;
+			+ ";" + itemsOptTemp + ";" + cOptTemp + ";" + pOtptTemp + ";"+ correct + ";"+ xyCoordinates + ";" + error;
 
 		string[] lines = {dataTrialText};
 		string folderPathSave = Application.dataPath + outputFolder;
@@ -296,7 +316,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Saves the headers for both files (Trial Info and Time Stamps)
+	/// Saves the headers for all output files and Compiles the instance information into one file 
 	/// In the trial file it saves:  1. The participant ID. 2. Instance details.
 	/// In the TimeStamp file it saves: 1. The participant ID. 2.The time onset of the stopwatch from which the time stamps are measured. 3. the event types description.
 	/// </summary>
@@ -306,9 +326,11 @@ public class GameManager : MonoBehaviour {
 		string folderPathSave = Application.dataPath + outputFolder;
 
 		//Instance Information File Saving
-		string[] lines3 = new string[numberOfInstances+1];
+		string[] lines3 = new string[numberOfInstances+2];
 		lines3[0]="PartcipantID:" + participantID;
-		int l = 1;
+
+		lines3 [1] = "Instance" + ";c" + ";w" + ";v" + ";id" + ";type" + ";pOpt" + ";cOpt" + ";itemsOpt";
+		int l = 2;
 		int ksn = 1;
 		foreach (KSInstance ks in ksinstances) {
 			//Without instance type and problem ID:
@@ -318,8 +340,8 @@ public class GameManager : MonoBehaviour {
 			string vTemp = string.Join (",", ks.values.Select (p => p.ToString ()).ToArray ());
 			string itemsOptTemp = string.Join (",", ks.itemsOpt.Select (p => p.ToString ()).ToArray ());
 
-			lines3 [l] = "Instance:" + ksn + ";c=" + ks.capacity + ";w=" + wTemp + ";v=" + vTemp + ";id=" + ks.id + ";type=" + ks.type 
-				+ ";pOpt=" + ks.profitOpt + ";cOpt=" + ks.capacityOpt + ";itemsOpt=" + itemsOptTemp ;
+			lines3 [l] =  ksn + ";" + ks.capacity + ";" + wTemp + ";" + vTemp + ";" + ks.id + ";" + ks.type 
+				+ ";" + ks.profitOpt + ";" + ks.capacityOpt + ";" + itemsOptTemp ;
 
 			l++;
 			ksn++;
@@ -334,7 +356,7 @@ public class GameManager : MonoBehaviour {
 		//Headers for save() file
 		string[] lines = new string[2];
 		lines[0]="PartcipantID:" + participantID;
-		lines[1] = "block;trial;submitted;timeSpent;instanceNumber;capacity;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;xyCoordinates;error";
+		lines[1] = "block;trial;submitted;timeSpent;instanceNumber;capacity;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;correct;xyCoordinates;error";
 		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "TrialInfo.txt",true)) {
 			foreach (string line in lines)
 				outputFile.WriteLine(line);

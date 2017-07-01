@@ -1,0 +1,5 @@
+PartcipantID:dsd
+block;trial;submitted;timeSpent;instanceNumber;capacity;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;correct;xyCoordinates;error
+1;1;2;50;20;84;0,0,0,0,0,0,0;0;0;1,1,1,0,0,1,0;76;99;False;(3.5,5.5)(0.5,0.5)(1.5,4.5)(8,5.5)(0,2.5)(8,3.5)(8,1);Pause
+1;2;2;50;17;55;0,0,0,0,0,0,0;0;0;1,1,0,0,1,1,0;40;103;False;(6.5,4.5)(6.5,2.5)(1,2.5)(-0.5,4.5)(2.5,5.5)(8,0.5)(3,0.5);Pause
+1;3;2;50;2;79;0,0,0,0,0,0,0;0;0;0,1,0,1,1,1,0;79;112;False;(8.5,4.5)(6.5,4)(5.5,6)(0,2.5)(2.5,0)(0.5,6)(8,1);Pause

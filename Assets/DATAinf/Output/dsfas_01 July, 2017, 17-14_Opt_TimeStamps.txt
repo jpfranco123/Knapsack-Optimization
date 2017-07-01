@@ -1,0 +1,8 @@
+PartcipantID:dsfas
+InitialTimeStamp:17-14-48-641
+1:ItemsNoQuestion;11:ItemsWithQuestion;2:AnswerScreen;21:ParticipantsAnswer;3:InterTrialScreen;4:InterBlockScreen;5:EndScreen
+block;trial;eventType;elapsedTime
+1;1;1;41
+1;1;11;82
+1;2;1;8492
+1;2;11;8529
