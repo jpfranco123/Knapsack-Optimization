@@ -227,8 +227,7 @@ public class GameManager : MonoBehaviour {
 				itemSelectedBool [itemS - 1] = 1;
 			}
 		}
-
-		//66 itemsSelectedInt to array of 0s and 1s
+			
 
 			
 		string itemsOptTemp = string.Join (",", ks.itemsOpt.Select (p => p.ToString ()).ToArray ());
@@ -236,7 +235,7 @@ public class GameManager : MonoBehaviour {
 		int pOtptTemp = ks.profitOpt;
 		string itemsSelectedBoolS = string.Join (",", itemSelectedBool.Select (p => p.ToString ()).ToArray ());
 
-		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ itemsSelectedBoolS + ";" + capacitySel + ";" + profitSel
+		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ ks.capacity +";"+ itemsSelectedBoolS + ";" + capacitySel + ";" + profitSel
 			+ ";" + itemsOptTemp + ";" + cOptTemp + ";" + pOtptTemp + ";" + xyCoordinates + ";" + error;
 
 		string[] lines = {dataTrialText};
@@ -304,10 +303,11 @@ public class GameManager : MonoBehaviour {
 	private static void saveHeaders(){
 
 		identifierName = participantID + "_" + dateID + "_" + "Opt" + "_";
+		string folderPathSave = Application.dataPath + outputFolder;
 
-		//Headers for save() file
-		string[] lines = new string[numberOfInstances+2];
-		lines[0]="PartcipantID:" + participantID;
+		//Instance Information File Saving
+		string[] lines3 = new string[numberOfInstances+1];
+		lines3[0]="PartcipantID:" + participantID;
 		int l = 1;
 		int ksn = 1;
 		foreach (KSInstance ks in ksinstances) {
@@ -318,22 +318,31 @@ public class GameManager : MonoBehaviour {
 			string vTemp = string.Join (",", ks.values.Select (p => p.ToString ()).ToArray ());
 			string itemsOptTemp = string.Join (",", ks.itemsOpt.Select (p => p.ToString ()).ToArray ());
 
-			lines [l] = "Instance:" + ksn + ";c=" + ks.capacity + ";w=" + wTemp + ";v=" + vTemp + ";id=" + ks.id + ";type=" + ks.type 
+			lines3 [l] = "Instance:" + ksn + ";c=" + ks.capacity + ";w=" + wTemp + ";v=" + vTemp + ";id=" + ks.id + ";type=" + ks.type 
 				+ ";pOpt=" + ks.profitOpt + ";cOpt=" + ks.capacityOpt + ";itemsOpt=" + itemsOptTemp ;
 
 			l++;
 			ksn++;
 		}
-		lines [l] = "block;trial;submitted;timeSpent;instanceNumber;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;xyCoordinates;error";
+		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "InstancesInfo.txt",true)) {
+			foreach (string line in lines3)
+				outputFile.WriteLine(line);
+		}
 
-		//Headerds for timestamps file
-		string folderPathSave = Application.dataPath + outputFolder;
-		//66 Change all save functions
 
+
+		//Headers for save() file
+		string[] lines = new string[2];
+		lines[0]="PartcipantID:" + participantID;
+		lines[1] = "block;trial;submitted;timeSpent;instanceNumber;capacity;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;xyCoordinates;error";
 		using (StreamWriter outputFile = new StreamWriter(folderPathSave + identifierName + "TrialInfo.txt",true)) {
 			foreach (string line in lines)
 				outputFile.WriteLine(line);
 		}
+
+
+
+		//Headerds for timestamps file
 		string[] lines1 = new string[4];
 		lines1[0]="PartcipantID:" + participantID;
 		lines1[1] = "InitialTimeStamp:" + initialTimeStamp;
