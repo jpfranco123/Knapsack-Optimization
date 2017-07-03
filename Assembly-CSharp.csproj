@@ -81,6 +81,7 @@
      <None Include="Assets\DATAinf\Input\KPInstances\i3.txt" />
      <None Include="Assets\DATAinf\Output\Poseidon_15 June, 2017, 10-59_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Output\dsd_01 July, 2017, 14-21_Opt_InstancesInfo.txt" />
+     <None Include="Assets\DATAinf\Output\dsfdfd_03 July, 2017, 13-32_Opt_TrialInfo.txt" />
      <None Include="Assets\DATAinf\Output\sss-13 June, 2017, 14-17.txt" />
      <None Include="Assets\DATAinf\Output\ddd_01 July, 2017, 17-13_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Output\33_13 June, 2017, 16-26_opt_TimeStamps.txt" />
@@ -108,6 +109,7 @@
      <None Include="Assets\DATAinf\Output\dd_01 July, 2017, 14-37_Opt_TimeStamps.txt" />
      <None Include="Assets\DATAinf\Output\dd_01 July, 2017, 15-39_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Input\templates\layoutParam.txt" />
+     <None Include="Assets\DATAinf\Output\dsfdfd_03 July, 2017, 13-32_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i30.txt" />
      <None Include="Assets\DATAinf\Output\dsd_01 July, 2017, 14-21_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i21.txt" />
@@ -131,6 +133,7 @@
      <None Include="Assets\DATAinf\Output\zeus_13 June, 2017, 16-38_Opt_TrialInfo.txt" />
      <None Include="Assets\DATAinf\Output\Poseidon_15 June, 2017, 10-59_Opt_TimeStamps.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i33.txt" />
+     <None Include="Assets\DATAinf\Output\dsfdfd_03 July, 2017, 13-32_Opt_InstancesInfo.txt" />
      <None Include="Assets\DATAinf\Output\dd_01 July, 2017, 15-39_Opt_InstancesInfo.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i7.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i31.txt" />
@@ -144,6 +147,7 @@
      <None Include="Assets\DATAinf\Input\layoutParam.txt" />
      <None Include="Assets\DATAinf\Output\Empty_13 June, 2017, 16-34_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Output\dsfas_01 July, 2017, 17-14_Opt_TrialInfo.txt" />
+     <None Include="Assets\DATAinf\Output\dsfdfd_03 July, 2017, 13-32_Opt_TimeStamps.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i9.txt" />
      <None Include="Assets\DATAinf\Output\34_14 June, 2017, 10-16_Opt_TimeStamps.txt" />
      <None Include="Assets\DATAinf\Output\dsfas_01 July, 2017, 17-14_Opt_TimeStamps.txt" />

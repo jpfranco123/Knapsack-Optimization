@@ -253,7 +253,9 @@ public class GameManager : MonoBehaviour {
 		int pOtptTemp = ks.profitOpt;
 		string itemsSelectedBoolS = string.Join (",", itemSelectedBool.Select (p => p.ToString ()).ToArray ());
 
-		bool correct = (capacitySel <= ks.capacity) && (profitSel == pOtptTemp);
+		bool correctB = (capacitySel <= ks.capacity) && (profitSel == pOtptTemp);
+
+		int correct = correctB ? 1 : 0;
 
 		string dataTrialText = block + ";" + trial + ";" + submitted + ";"  + timeSpent +  ";" + instanceNum + ";"+ ks.capacity +";"+ itemsSelectedBoolS + ";" + capacitySel + ";" + profitSel
 			+ ";" + itemsOptTemp + ";" + cOptTemp + ";" + pOtptTemp + ";"+ correct + ";"+ xyCoordinates + ";" + error;
