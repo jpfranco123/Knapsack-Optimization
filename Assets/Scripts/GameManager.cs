@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour {
 		string[] lines3 = new string[numberOfInstances+2];
 		lines3[0]="PartcipantID:" + participantID;
 
-		lines3 [1] = "Instance" + ";c" + ";w" + ";v" + ";id" + ";type" + ";pOpt" + ";cOpt" + ";itemsOpt";
+		lines3 [1] = "instanceNumber" + ";c" + ";w" + ";v" + ";id" + ";type" + ";pOpt" + ";cOpt" + ";itemsOpt";
 		int l = 2;
 		int ksn = 1;
 		foreach (KSInstance ks in ksinstances) {
