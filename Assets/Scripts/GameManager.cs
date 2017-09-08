@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour {
 	//Current block initialization
 	public static int block = 0;
 
+	//Total trial (As if no blocks were used)
+	public static int generalTrial=0;
+
 	private static bool showTimer;
 
 
@@ -161,6 +164,7 @@ public class GameManager : MonoBehaviour {
 
 		} else if (escena == 1) {
 			trial++;
+			generalTrial = trial + (block - 1) * numberOfTrials;
 			showTimer = true;
 			boardScript.SetupScene (1);
 
@@ -230,7 +234,7 @@ public class GameManager : MonoBehaviour {
 		string xyCoordinates = BoardManager.getItemCoordinates ();
 
 		//Get the instance number for this trial and add 1 because the instanceRandomization is linked to array numbering in C#, which starts at 0;
-		int instanceNum = instanceRandomization [trial + (block - 1) * numberOfTrials - 1] + 1;
+		int instanceNum = instanceRandomization [generalTrial - 1] + 1;
 
 		KSInstance ks = ksinstances [instanceNum - 1];
 

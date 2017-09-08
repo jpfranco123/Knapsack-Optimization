@@ -72,6 +72,7 @@
      <None Include="Assets\DATAinf\Output\ddd_01 July, 2017, 14-25_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Input\param.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i11.txt" />
+     <None Include="Assets\DATAinf\Output\dsdfdsdhjfs_03 September, 2017, 19-37_Opt_TrialInfo.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i20.txt" />
      <None Include="Assets\DATAinf\Output\dddd_01 July, 2017, 14-31_Opt_TimeStamps.txt" />
      <None Include="Assets\DATAinf\Output\dddd_01 July, 2017, 14-31_Opt_TrialInfo.txt" />
@@ -128,6 +129,7 @@
      <None Include="Assets\DATAinf\Input\KPInstances\i17.txt" />
      <None Include="Assets\DATAinf\Output\ddd_01 July, 2017, 16-58_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Input\INPUT Information.txt" />
+     <None Include="Assets\DATAinf\Output\dsdfdsdhjfs_03 September, 2017, 19-37_Opt_Clicks.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i13.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i14.txt" />
      <None Include="Assets\DATAinf\Output\zeus_13 June, 2017, 16-38_Opt_TrialInfo.txt" />
@@ -135,6 +137,7 @@
      <None Include="Assets\DATAinf\Input\KPInstances\i33.txt" />
      <None Include="Assets\DATAinf\Output\dsfdfd_03 July, 2017, 13-32_Opt_InstancesInfo.txt" />
      <None Include="Assets\DATAinf\Output\dd_01 July, 2017, 15-39_Opt_InstancesInfo.txt" />
+     <None Include="Assets\DATAinf\Output\dsdfdsdhjfs_03 September, 2017, 19-37_Opt_TimeStamps.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i7.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i31.txt" />
      <None Include="Assets\DATAinf\Input\templates\param2.txt" />
@@ -158,6 +161,7 @@
      <None Include="Assets\DATAinf\Input\KPInstances\i12.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i2.txt" />
      <None Include="Assets\DATAinf\Output\ddd_01 July, 2017, 17-13_Opt_TrialInfo.txt" />
+     <None Include="Assets\DATAinf\Output\dsdfdsdhjfs_03 September, 2017, 19-37_Opt_InstancesInfo.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i35.txt" />
      <None Include="Assets\DATAinf\Input\KPInstances\i5.txt" />
  <Reference Include="UnityEngine.UI">

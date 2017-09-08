@@ -168,7 +168,7 @@ public class BoardManager : MonoBehaviour {
 	//2. The weight and value vectors are uploaded
 	//3. The instance prefab is uploaded
 	void setKSInstance(){
-		int randInstance = GameManager.instanceRandomization[GameManager.trial-1];
+		int randInstance = GameManager.instanceRandomization[GameManager.generalTrial-1];
 
 //		Text Quest = GameObject.Find("Question").GetComponent<Text>();
 //		String question = "Can you obtain at least $" + GameManager.ksinstances[randInstance].profit + " with at most " + GameManager.ksinstances[randInstance].capacity +"kg?";
