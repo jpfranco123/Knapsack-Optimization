@@ -1,4 +1,0 @@
-PartcipantID:dddd
-block;trial;submitted;timeSpent;instanceNumber;capacity;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;correct;xyCoordinates;error
-1;1;2;50;20;84;0,0,0,0,0,0,0;0;0;1,1,1,0,0,1,0;76;99;False;(1.5,2.5)(5,6)(8,4)(2,5.5)(0,1.5)(8,0.5)(6,1.5);Pause
-1;2;2;50;17;55;0,0,0,0,0,0,0;0;0;1,1,0,0,1,1,0;40;103;False;(8,5)(7.5,2.5)(5.5,5.5)(2.5,1)(0.5,6)(0,1)(8,0.5);Pause

@@ -1,3 +1,0 @@
-PartcipantID:dsfas
-InitialTimeStamp:17-14-48-641
-block;trial;item;In(1)/Out(0);time

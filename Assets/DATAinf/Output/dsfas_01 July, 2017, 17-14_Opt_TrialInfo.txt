@@ -1,3 +1,0 @@
-PartcipantID:dsfas
-block;trial;submitted;timeSpent;instanceNumber;capacity;itemsSelected;capacitySel;profitSel;itemsOpt;capacityOpt;profitOpt;correct;xyCoordinates;error
-1;1;2;50;20;84;0,0,0,0,0,0,0;0;0;1,1,1,0,0,1,0;76;99;False;(0,2)(7.5,4)(2,5.5)(0,5)(6.5,0.5)(6,5.5)(3.5,0.5);Pause

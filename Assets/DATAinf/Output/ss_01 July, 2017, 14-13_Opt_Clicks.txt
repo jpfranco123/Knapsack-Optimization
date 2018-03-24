@@ -1,3 +1,0 @@
-PartcipantID:ss
-InitialTimeStamp:14-14-02-477
-block;trial;item;In(1)/Out(0);time
